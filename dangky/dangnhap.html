@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>NHH MARKET - Đăng nhập</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Font + Icon -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
+    <style>
+        /* (GIỮ NGUYÊN CSS CỦA BẠN — KHÔNG THAY ĐỔI BẤT KỲ DÒNG NÀO) */
+        :root{
+            --green:#2e7d32;
+            --green-dark:#1b5e20;
+            --green-soft:#c8e6c9;
+            --yellow:#f9a825;
+            --white:#ffffff;
+            --shadow:0 20px 40px rgba(0,0,0,0.35);
+            --radius:22px;
+        }
+
+        *{box-sizing:border-box;margin:0;padding:0;}
+        body{
+            font-family:'Nunito',sans-serif;
+            min-height:100vh;
+            color:#123;
+            background:#e8f5e9;
+            overflow:hidden;
+        }
+
+        body::before{
+            content:"";
+            position:fixed;
+            inset:0;
+            background:url("https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1600&q=80")
+                        center/cover no-repeat;
+            opacity:.45;
+            filter:blur(1.5px);
+            z-index:-2;
+        }
+        body::after{
+            content:"";
+            position:fixed;
+            inset:0;
+            background:radial-gradient(circle at top left,rgba(255,255,255,.7),transparent 55%),
+                       radial-gradient(circle at bottom right,rgba(56,142,60,.6),rgba(0,0,0,.7));
+            mix-blend-mode:soft-light;
+            z-index:-1;
+        }
+
+        a{text-decoration:none;color:inherit;}
+        .top-bar{
+            position:fixed;
+            top:0;left:0;right:0;
+            padding:8px 22px;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            z-index:10;
+            color:#f1f8e9;
+            pointer-events:none;
+        }
+        .brand{
+            display:flex;align-items:center;gap:8px;
+            font-weight:800;font-size:1.22rem;
+            text-shadow:0 3px 10px rgba(0,0,0,.55);
+        }
+        .brand-icon{
+            width:34px;height:34px;border-radius:50%;
+            background:radial-gradient(circle at 30% 30%,#fff,var(--green));
+            display:flex;align-items:center;justify-content:center;
+            color:#fff;box-shadow:0 4px 12px rgba(0,0,0,.4);
+        }
+        .top-link{
+            pointer-events:auto;
+            font-size:.9rem;
+            padding:6px 14px;
+            border-radius:999px;
+            border:1px solid rgba(255,255,255,.7);
+            background:rgba(0,0,0,.25);
+            backdrop-filter:blur(10px);
+        }
+
+        .auth-wrapper{
+            height:100vh;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            padding:80px 16px 24px;
+        }
+
+        .auth-card{
+            width:100%;
+            max-width:980px;
+            display:grid;
+            grid-template-columns:1.1fr 1fr;
+            background:rgba(255,255,255,.08);
+            border-radius:var(--radius);
+            padding:2px;
+            box-shadow:var(--shadow);
+            backdrop-filter:blur(14px);
+            border:1px solid rgba(255,255,255,.2);
+            animation:slideUp .8s ease-out forwards;
+            overflow:hidden;
+            position:relative;
+        }
+
+        .auth-card::before{
+            content:"";
+            position:absolute;
+            inset:0;
+            background:linear-gradient(135deg,rgba(255,255,255,.35),rgba(200,230,201,.05));
+            pointer-events:none;
+        }
+
+        .auth-side{
+            position:relative;
+            padding:24px 26px;
+            z-index:1;
+        }
+
+        .auth-visual{
+            border-radius:var(--radius);
+            background:radial-gradient(circle at 0 0,rgba(255,255,255,.35),transparent 55%),
+                       linear-gradient(135deg,rgba(27,94,32,.9),rgba(56,142,60,.7));
+            color:#f1f8e9;
+            display:flex;
+            flex-direction:column;
+            justify-content:space-between;
+        }
+        .visual-top h1{
+            font-size:2rem;
+            line-height:1.25;
+            margin-bottom:10px;
+        }
+        .visual-top h1 span{color:var(--yellow);}
+        .visual-top p{
+            font-size:.96rem;
+            opacity:.95;
+            margin-bottom:16px;
+        }
+        .visual-badges{
+            display:flex;flex-wrap:wrap;gap:10px;
+            font-size:.8rem;
+        }
+        .v-badge{
+            padding:5px 10px;
+            border-radius:999px;
+            background:rgba(255,255,255,.15);
+            border:1px solid rgba(255,255,255,.35);
+        }
+        .visual-bottom{
+            font-size:.8rem;
+            opacity:.9;
+            display:flex;
+            justify-content:space-between;
+            align-items:flex-end;
+            gap:8px;
+        }
+        .visual-bottom strong{font-size:1.1rem;}
+
+        .auth-form{
+            background:rgba(255,255,255,.96);
+            border-radius:var(--radius);
+            box-shadow:0 12px 30px rgba(0,0,0,.15);
+        }
+        .auth-form h2{
+            font-size:1.4rem;
+            color:var(--green-dark);
+            margin-bottom:4px;
+        }
+        .auth-form p{
+            font-size:.9rem;
+            color:#555;
+            margin-bottom:18px;
+        }
+        label{
+            display:block;
+            font-size:.82rem;
+            font-weight:600;
+            margin-bottom:4px;
+            color:#234;
+        }
+        .field{margin-bottom:12px;}
+        .input-wrap{position:relative;}
+
+        input{
+            width:100%;
+            border-radius:999px;
+            border:1px solid rgba(0,0,0,.15);
+            padding:9px 40px 9px 12px;
+            font-size:.9rem;
+            outline:none;
+            transition:border .2s, box-shadow .2s, background .2s;
+        }
+        input:focus{
+            border-color:var(--green);
+            box-shadow:0 0 0 2px rgba(76,175,80,.25);
+            background:#fdfefc;
+        }
+        .input-icon{
+            position:absolute;
+            right:12px;top:50%;
+            transform:translateY(-50%);
+            color:#777;
+            cursor:pointer;
+        }
+
+        .form-row{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            font-size:.8rem;
+            margin-bottom:12px;
+        }
+        .form-row a{color:var(--green-dark);}
+        .remember{
+            display:flex;align-items:center;gap:6px;
+        }
+        .remember input{
+            width:auto;
+            box-shadow:none;
+            padding:0;
+        }
+
+        .btn{
+            border:none;cursor:pointer;
+            font-weight:700;font-size:.94rem;
+            padding:9px 18px;
+            border-radius:999px;
+            width:100%;
+            display:inline-flex;align-items:center;justify-content:center;gap:8px;
+            transition:transform .15s,box-shadow .15s,background .2s;
+        }
+        .btn-primary{
+            background:linear-gradient(135deg,var(--green),var(--green-dark));
+            color:#fff;
+            box-shadow:0 12px 22px rgba(0,0,0,.24);
+        }
+        .btn-primary:hover{
+            transform:translateY(-1px) scale(1.02);
+            box-shadow:0 16px 30px rgba(0,0,0,.3);
+        }
+
+        .divider{
+            display:flex;align-items:center;
+            margin:12px 0;
+            font-size:.8rem;
+            color:#777;
+        }
+        .divider::before,
+        .divider::after{
+            content:"";
+            flex:1;
+            height:1px;
+            background:linear-gradient(to right,transparent,#ddd);
+        }
+        .divider span{margin:0 8px;}
+
+        .socials{
+            display:flex;
+            gap:10px;
+        }
+        .social-btn{
+            flex:1;
+            padding:7px 10px;
+            border-radius:999px;
+            border:1px solid rgba(0,0,0,.12);
+            font-size:.8rem;
+            display:flex;align-items:center;justify-content:center;gap:6px;
+            background:#fafafa;
+            cursor:pointer;
+            transition:background .15s,transform .1s,box-shadow .1s;
+        }
+        .social-btn:hover{
+            background:#fff;
+            transform:translateY(-1px);
+            box-shadow:0 8px 15px rgba(0,0,0,.12);
+        }
+
+        .hint{
+            font-size:.8rem;
+            margin-top:10px;
+            text-align:center;
+            color:#555;
+        }
+        .hint a{
+            color:var(--green-dark);
+            font-weight:700;
+        }
+
+        .msg{
+            font-size:.8rem;
+            margin-top:8px;
+            text-align:center;
+        }
+
+        @keyframes slideUp{
+            0%{opacity:0;transform:translateY(28px) scale(.97);}
+            100%{opacity:1;transform:translateY(0) scale(1);}
+        }
+
+        @media (max-width:860px){
+            .auth-card{
+                max-width:520px;
+                grid-template-columns:1fr;
+            }
+            .auth-visual{
+                display:none;
+            }
+        }
+        @media (max-width:520px){
+            .auth-form{padding:20px 18px;}
+            .top-bar{justify-content:center;}
+            .top-link{display:none;}
+        }
+    </style>
+</head>
+<body>
+
+<header class="top-bar">
+    <div class="brand">
+        <div class="brand-icon"><i class="fa-solid fa-leaf"></i></div>
+        NHH MARKET
+    </div>
+    <a href="/dangkyhuan/index.html" class="top-link">
+        <i class="fa-solid fa-arrow-left"></i> Về trang chủ
+    </a>
+</header>
+
+<div class="auth-wrapper">
+    <div class="auth-card">
+
+        <!-- Cột trái -->
+        <div class="auth-side auth-visual">
+            <div class="visual-top">
+                <h1>Chào mừng bạn<br>trở lại với <span>NHH MARKET</span></h1>
+                <p>Nền tảng kết nối nông dân với thị trường tiêu thụ.</p>
+                <div class="visual-badges">
+                    <div class="v-badge"><i class="fa-solid fa-signal"></i> Giá cập nhật</div>
+                    <div class="v-badge"><i class="fa-solid fa-handshake"></i> Đối tác uy tín</div>
+                    <div class="v-badge"><i class="fa-solid fa-seedling"></i> Hỗ trợ nông dân</div>
+                </div>
+            </div>
+            <div class="visual-bottom">
+                <div><strong>+3.200</strong><br>Nông dân</div>
+                <div><strong>+950</strong><br>Đầu mối</div>
+                <div><strong>24/7</strong><br>Hỗ trợ</div>
+            </div>
+        </div>
+
+        <!-- Cột phải: form -->
+        <div class="auth-side auth-form">
+            <h2>Đăng nhập</h2>
+            <p>Quản lý sản phẩm, theo dõi giá và kết nối với người mua.</p>
+
+            <form id="loginForm">
+
+                <div class="field">
+                    <label for="identifier">Số điện thoại hoặc Email</label>
+                    <div class="input-wrap">
+                        <input id="identifier" type="text" required placeholder="Ví dụ: 0987xxxxxx">
+                        <span class="input-icon"><i class="fa-regular fa-user"></i></span>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="password">Mật khẩu</label>
+                    <div class="input-wrap">
+                        <input id="password" type="password" required placeholder="Nhập mật khẩu của bạn">
+                        <span class="input-icon" id="togglePwd"><i class="fa-regular fa-eye"></i></span>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <label class="remember">
+                        <input type="checkbox" checked>
+                        <span>Ghi nhớ đăng nhập</span>
+                    </label>
+                    <a href="#">Quên mật khẩu?</a>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa-solid fa-right-to-bracket"></i> Đăng nhập
+                </button>
+
+                <p class="hint">
+                    Chưa có tài khoản?
+                    <a href="dangky.html">Đăng ký ngay</a>
+                </p>
+
+                <p class="msg" id="loginMsg"></p>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    /* Ẩn hiện mật khẩu */
+    const pwdInput = document.getElementById("password");
+    const toggle = document.getElementById("togglePwd");
+
+    toggle.addEventListener("click", () => {
+        const isPwd = pwdInput.type === "password";
+        pwdInput.type = isPwd ? "text" : "password";
+        toggle.innerHTML = isPwd
+                ? '<i class="fa-regular fa-eye-slash"></i>'
+                : '<i class="fa-regular fa-eye"></i>';
+    });
+
+    const form = document.getElementById("loginForm");
+    const msg = document.getElementById("loginMsg");
+
+    form.addEventListener("submit", (e)=>{
+        e.preventDefault();
+
+        const id = document.getElementById("identifier").value.trim(); //  sửa đúng id
+        const pass  = document.getElementById("password").value;
+
+        let users = JSON.parse(localStorage.getItem("users") || "[]");
+        if (!Array.isArray(users)) users = []; // đề phòng lỗi dạng localStorage
+
+        // Cho phép đăng nhập bằng sđt hoặc email
+        const user = users.find(u =>
+            (u.phone === id || u.email === id) &&
+            u.password === pass
+        );
+
+        if (!user){
+            msg.style.color = "#c0392b";
+            msg.textContent = "Sai tài khoản hoặc mật khẩu!";
+            return;
+        }
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        msg.style.color = "#1b5e20";
+        msg.textContent = "Đăng nhập thành công!";
+
+        setTimeout(()=>{
+            window.location.href = "/dangkyhuan/index.html"; //  đường dẫn đến trang chủ
+        }, 1000);
+    });
+</script>
+</body>
+</html>

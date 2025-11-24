@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Thị Trường – NHH MARKET</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Font + Icon -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+  <style>
+  /* ----------------- CSS CƠ BẢN (Giữ nguyên style cũ) ----------------- */
+  :root {
+    --primary: #22c55e;
+    --primary-dark: #15803d;
+    --primary-soft: #dcfce7;
+    --bg: #f4f7fb;
+    --text: #111827;
+    --muted: #6b7280;
+    --radius-md: 16px;
+    --shadow-card: 0 10px 25px rgba(15, 23, 42, 0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Poppins", sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  img { max-width: 100%; display: block; }
+  a { text-decoration: none; color: inherit; }
+  .container { width: min(1120px, 100% - 40px); margin-inline: auto; }
+/*màu user*/
+  .user-menu {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-name {
+  font-size: 0.9rem;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #15bca0; /* màu chữ tuỳ nền header */
+}
+
+.user-name i {
+  font-size: 1.1rem;
+}
+
+  /* Header */
+  header {
+    position: fixed; inset-inline: 0; top: 0; z-index: 100;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  }
+  .nav { height: 72px; display: flex; align-items: center; justify-content: space-between; }
+  .logo { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.1rem; color: var(--primary-dark); }
+  .logo img { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; }
+  .nav-links { list-style: none; display: flex; gap: 26px; font-weight: 500; }
+  .nav-links a.active { color: var(--primary); font-weight: 600; border-bottom: 2px solid var(--primary); }
+  
+  .btn {
+    border-radius: 999px; padding: 9px 20px; font-weight: 600; border: none; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 8px; transition: 0.2s;
+  }
+  .btn-primary { background: var(--primary); color: white; }
+  .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); }
+  .btn-outline { border: 1px solid #d1d5db; background: white; }
+
+  /* Hero & Layout */
+  .market-hero { margin-top: 72px; padding: 50px 0; background: linear-gradient(180deg, #ecfdf5 0%, var(--bg) 100%); text-align: center; }
+  .market-layout { display: grid; grid-template-columns: 280px 1fr; gap: 30px; padding-bottom: 80px; align-items: start; }
+
+  /* Sidebar Filter */
+  .filter-box { background: #fff; padding: 24px; border-radius: var(--radius-md); box-shadow: var(--shadow-card); position: sticky; top: 90px; }
+  .filter-group { margin-bottom: 20px; }
+  .filter-label { font-weight: 600; margin-bottom: 10px; display: block; font-size: 0.9rem; }
+  .checkbox-item { margin-bottom: 8px; display: flex; align-items: center; gap: 10px; font-size: 0.9rem; color: #4b5563; cursor: pointer; }
+  
+  /* Product Grid */
+  .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 24px; }
+  
+  .m-card {
+    background: #fff; border-radius: var(--radius-md); box-shadow: var(--shadow-card);
+    overflow: hidden; transition: transform 0.3s ease; border: 1px solid transparent;
+    display: flex; flex-direction: column;
+  }
+  .m-card:hover { transform: translateY(-5px); border-color: var(--primary-soft); }
+  .m-card-img-box { height: 180px; position: relative; overflow: hidden; }
+  .m-card-img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+  .m-card:hover .m-card-img { transform: scale(1.08); }
+  .m-badge {
+    position: absolute; top: 10px; left: 10px; padding: 4px 10px; border-radius: 99px;
+    font-size: 0.7rem; color: white; font-weight: 600;
+  }
+  .m-badge.hot { background: #ef4444; }
+  .m-badge.new { background: #22c55e; }
+  
+  .m-card-body { padding: 16px; flex: 1; display: flex; flex-direction: column; }
+  .m-cat { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; }
+  .m-title { font-size: 1.05rem; font-weight: 600; margin: 4px 0; height: 48px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+  .m-price { color: var(--primary-dark); font-weight: 700; font-size: 1.1rem; margin-bottom: 5px; }
+  .m-location { font-size: 0.8rem; color: #6b7280; display: flex; align-items: center; gap: 4px; margin-bottom: 12px; }
+  
+  .m-footer { margin-top: auto; padding-top: 12px; border-top: 1px solid #f3f4f6; display: flex; justify-content: space-between; align-items: center; }
+  .m-seller { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; font-weight: 500; }
+  .m-seller img { width: 24px; height: 24px; border-radius: 50%; }
+
+  /* PAGINATION STYLES */
+  .pagination { display: flex; justify-content: center; gap: 8px; margin-top: 40px; }
+  .page-btn {
+    width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+    border-radius: 10px; border: 1px solid #d1d5db; background: white;
+    cursor: pointer; font-weight: 600; transition: 0.2s;
+  }
+  .page-btn:hover { border-color: var(--primary); color: var(--primary); }
+  .page-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+  .page-btn.disabled { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
+
+  @media (max-width: 900px) {
+    .market-layout { grid-template-columns: 1fr; }
+    .filter-box { display: none; }
+    .nav-links, .nav-actions { display: none; }
+  }
+  </style>
+</head>
+<body>
+
+  <header>
+  <nav class="container nav">
+    <a href="../index.html" class="logo">
+      <img src="https://images.pexels.com/photos/2886937/pexels-photo-2886937.jpeg?auto=compress&cs=tinysrgb&w=200"
+           alt="Logo NHH MARKET">
+      <span>NHH MARKET</span>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="../index.html">Trang chủ</a></li>
+      <li><a href="banggia.html">Bảng giá</a></li>
+      <li><a href="thitruong.html">Thị trường</a></li>
+      <li><a href="#">Hồ sơ</a></li>
+    </ul>
+
+    <div class="nav-actions" id="navActions">
+      <a class="btn btn-outline" href="dangnhap.html">Đăng nhập</a>
+      <a class="btn btn-primary" href="dangky.html">Đăng ký miễn phí</a>
+    </div>
+  </nav>
+</header>
+
+  <main>
+    <section class="market-hero">
+      <div class="container">
+        <h1 style="font-size:2rem; color: var(--primary-dark); margin-bottom:10px;">Sàn Giao Dịch Nông Sản</h1>
+        <p style="color: var(--muted); margin-bottom: 25px;">Kết nối 18.000+ nhà vườn và thương lái trên toàn quốc.</p>
+        
+        <div style="max-width: 600px; margin: 0 auto; display: flex; gap: 10px;">
+          <input type="text" id="searchInput" placeholder="Tìm: Sầu riêng, Gạo ST25, Cà phê..." 
+                 style="flex:1; padding: 12px 20px; border-radius: 99px; border: 1px solid #d1d5db; outline:none;">
+          <button class="btn btn-primary" onclick="handleSearch()"><i class='bx bx-search'></i> Tìm</button>
+        </div>
+      </div>
+    </section>
+
+    <div class="container market-layout">
+      <!-- SIDEBAR -->
+      <aside class="filter-box">
+        <div class="filter-group">
+          <label class="filter-label">Danh mục</label>
+          <div class="checkbox-item"><input type="checkbox" value="trai-cay" class="cat-cb" checked> Trái cây</div>
+          <div class="checkbox-item"><input type="checkbox" value="rau-cu" class="cat-cb" checked> Rau củ quả</div>
+          <div class="checkbox-item"><input type="checkbox" value="lua-gao" class="cat-cb" checked> Lúa gạo & Ngũ cốc</div>
+          <div class="checkbox-item"><input type="checkbox" value="hai-san" class="cat-cb" checked> Thủy hải sản</div>
+          <div class="checkbox-item"><input type="checkbox" value="cong-nghiep" class="cat-cb" checked> Cây công nghiệp</div>
+        </div>
+        <div class="filter-group">
+          <label class="filter-label">Khu vực</label>
+          <select id="regionSelect" onchange="handleSearch()" style="width:100%; padding:8px; border-radius:8px; border:1px solid #ddd;">
+            <option value="all">Toàn quốc</option>
+            <option value="mien-bac">Miền Bắc</option>
+            <option value="mien-trung">Miền Trung & TN</option>
+            <option value="mien-nam">Miền Nam</option>
+          </select>
+        </div>
+        <button class="btn btn-outline" style="width:100%; justify-content:center;" onclick="resetFilter()">Đặt lại bộ lọc</button>
+      </aside>
+
+      <!-- GRID & PAGINATION -->
+      <section>
+        <div style="margin-bottom:20px; display:flex; justify-content:space-between; color:#666; font-size:0.9rem;">
+          <span id="resultCount">Tìm thấy 18 kết quả</span>
+          <select style="border:none; background:none; font-weight:600; cursor:pointer;">
+            <option>Mới nhất</option>
+            <option>Giá thấp đến cao</option>
+          </select>
+        </div>
+
+        <!-- Nơi chứa sản phẩm -->
+        <div class="product-grid" id="gridContainer"></div>
+
+        <!-- Nút chuyển trang -->
+        <div class="pagination" id="paginationContainer">
+          <!-- JS sẽ tạo nút 1, 2, 3 ở đây -->
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    // 1. DỮ LIỆU SẢN PHẨM (18 MÓN ĐỂ CHIA THÀNH 3 TRANG, 6 MÓN/TRANG)
+    const allProducts = [
+      // Trang 1
+      { id: 1, name: "Sầu riêng Ri6 Hạt Lép", price: 65000, unit: "đ/kg", cat: "trai-cay", region: "mien-nam", loc: "Cai Lậy, Tiền Giang", img: "https://thuthuatnhanh.com/wp-content/uploads/2021/12/Hinh-anh-qua-Sau-Rieng-dep-mat-thom-ngon-hap-dan-nhat-1.jpg", seller: "Vườn Út Bảy", badge: "hot" },
+      { id: 2, name: "Gạo ST25 Lúa Tôm (Bao 10kg)", price: 240000, unit: "đ/bao", cat: "lua-gao", region: "mien-nam", loc: "Sóc Trăng", img: "https://images.pexels.com/photos/4110251/pexels-photo-4110251.jpeg?auto=compress&cs=tinysrgb&w=600", seller: "Gạo Ngon", badge: "new" },
+      { id: 3, name: "Cà phê Robusta Nhân Xô", price: 62000, unit: "đ/kg", cat: "cong-nghiep", region: "mien-trung", loc: "Di Linh, Lâm Đồng", img: "https://www.picgifs.com/wallpapers/wallpapers/coffee-and-tea/8.jpg", seller: "Nông trại 365", badge: "hot" },
+      { id: 4, name: "Thanh Long Ruột Đỏ", price: 22000, unit: "đ/kg", cat: "trai-cay", region: "mien-nam", loc: "Bình Thuận", img: "https://content.pancake.vn/1/s900x900/fwebp0/8d/00/dd/39/be5724987bc1f6aee29d73dc29210e9d50bfb1aec16d36cb3b474374-w:900-h:900-l:1062411-t:image/png.png", seller: "HTX Rồng Đỏ", badge: "" },
+      { id: 5, name: "Tôm Sú Nguyên Liệu (30 con/kg)", price: 180000, unit: "đ/kg", cat: "hai-san", region: "mien-nam", loc: "Bạc Liêu", img: "https://tse4.mm.bing.net/th/id/OIP.QN-9t8PN-EZuHb0CbG7qvwHaHa?rs=1&pid=ImgDetMain&o=7&rm=3", seller: "Hải Sản Biển", badge: "" },
+      { id: 6, name: "Bơ Sáp 034 Dẻo", price: 25000, unit: "đ/kg", cat: "trai-cay", region: "mien-trung", loc: "Đắk Nông", img: "https://images.pexels.com/photos/557659/pexels-photo-557659.jpeg?auto=compress&cs=tinysrgb&w=600", seller: "Cô Tư Bơ", badge: "" },
+      
+      // Trang 2
+      { id: 7, name: "Hạt Điều Rang Muối (A Cồ)", price: 210000, unit: "đ/kg", cat: "cong-nghiep", region: "mien-nam", loc: "Bình Phước", img: "https://cf.shopee.vn/file/029e2d4f80744f1dae6cf92dbd1c57b1", seller: "Xưởng Điều 99", badge: "" },
+      { id: 8, name: "Vải Thiều Lục Ngạn (Sớm)", price: 35000, unit: "đ/kg", cat: "trai-cay", region: "mien-bac", loc: "Bắc Giang", img: "https://thvm.vn/wp-content/uploads/2021/06/Vai-thieu-thanh-ha.jpg", seller: "Anh Nam", badge: "new" },
+      { id: 9, name: "Khoai Lang Nhật (Tím)", price: 12000, unit: "đ/kg", cat: "rau-cu", region: "mien-nam", loc: "Vĩnh Long", img: "https://images.pexels.com/photos/144248/potatoes-vegetables-erdfrucht-bio-144248.jpeg?auto=compress&cs=tinysrgb&w=600", seller: "Nông Sản Sạch", badge: "" },
+      { id: 10, name: "Măng Cụt Lái Thiêu", price: 55000, unit: "đ/kg", cat: "trai-cay", region: "mien-nam", loc: "Bình Dương", img: "https://toquoc.mediacdn.vn/280518851207290880/2022/11/22/goi-ga-mang-cut-anh-chieu-nay-quan-16691035291651257064790.jpg", seller: "Vườn Xanh", badge: "" },
+      { id: 11, name: "Hồ Tiêu Đen (Tiêu sọ)", price: 75000, unit: "đ/kg", cat: "cong-nghiep", region: "mien-trung", loc: "Gia Lai", img: "https://hattieu.vn/wp-content/uploads/2017/06/hat-tieu-den-01-2.jpg", seller: "Đại lý Tiêu", badge: "hot" },
+      { id: 12, name: "Dưa Hấu Hắc Mỹ Nhân", price: 8000, unit: "đ/kg", cat: "trai-cay", region: "mien-trung", loc: "Phú Yên", img: "https://images.pexels.com/photos/1313267/pexels-photo-1313267.jpeg?auto=compress&cs=tinysrgb&w=600", seller: "Chú Ba Dưa", badge: "" },
+
+      // Trang 3
+      { id: 13, name: "Cá Tra Phi Lê Đông Lạnh", price: 32000, unit: "đ/kg", cat: "hai-san", region: "mien-nam", loc: "An Giang", img: "https://images.pexels.com/photos/8951496/pexels-photo-8951496.jpeg?auto=compress&cs=tinysrgb&w=600", seller: "Nam Việt Corp", badge: "" },
+      { id: 14, name: "Bưởi Da Xanh Bến Tre", price: 38000, unit: "đ/kg", cat: "trai-cay", region: "mien-nam", loc: "Bến Tre", img: "https://images.pexels.com/photos/2090902/pexels-photo-2090902.jpeg?auto=compress&cs=tinysrgb&w=600", seller: "Vườn Cô Tám", badge: "" },
+      { id: 15, name: "Chè (Trà) Thái Nguyên Móc Câu", price: 350000, unit: "đ/kg", cat: "cong-nghiep", region: "mien-bac", loc: "Thái Nguyên", img: "https://images.pexels.com/photos/1793035/pexels-photo-1793035.jpeg?auto=compress&cs=tinysrgb&w=600", seller: "Tân Cương Trà", badge: "hot" },
+      { id: 16, name: "Macca Sấy Nứt Vỏ", price: 190000, unit: "đ/kg", cat: "cong-nghiep", region: "mien-trung", loc: "Đắk Lắk", img: "https://images.pexels.com/photos/6368826/pexels-photo-6368826.jpeg?auto=compress&cs=tinysrgb&w=600", seller: "Macca Farm", badge: "" },
+      { id: 17, name: "Nhãn Xuồng Cơm Vàng", price: 30000, unit: "đ/kg", cat: "trai-cay", region: "mien-nam", loc: "Bà Rịa", img: "https://images.pexels.com/photos/1128678/pexels-photo-1128678.jpeg?auto=compress&cs=tinysrgb&w=600", seller: "Nông sản Bà Rịa", badge: "" },
+      { id: 18, name: "Cà Rốt Đà Lạt (Loại 1)", price: 15000, unit: "đ/kg", cat: "rau-cu", region: "mien-trung", loc: "Đà Lạt", img: "https://images.pexels.com/photos/65174/pexels-photo-65174.jpeg?auto=compress&cs=tinysrgb&w=600", seller: "Rau Sạch Farm", badge: "" },
+    ];
+
+    // 2. CẤU HÌNH PHÂN TRANG
+    let currentPage = 1;
+    const itemsPerPage = 6; // Mỗi trang hiển thị 6 sản phẩm
+    let filteredData = [...allProducts]; // Dữ liệu đang được hiển thị (sau khi lọc)
+
+    const gridContainer = document.getElementById('gridContainer');
+    const paginationContainer = document.getElementById('paginationContainer');
+    const resultCount = document.getElementById('resultCount');
+    const searchInput = document.getElementById('searchInput');
+    const regionSelect = document.getElementById('regionSelect');
+    const categoryCheckboxes = document.querySelectorAll('.cat-cb');
+
+    // 3. HÀM RENDER (HIỂN THỊ)
+    function render() {
+      // A. Tính toán cắt mảng dữ liệu cho trang hiện tại
+      const startIndex = (currentPage - 1) * itemsPerPage;
+      const endIndex = startIndex + itemsPerPage;
+      const dataToShow = filteredData.slice(startIndex, endIndex);
+
+      // B. Hiển thị lưới sản phẩm
+      gridContainer.innerHTML = "";
+      if (dataToShow.length === 0) {
+        gridContainer.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:40px;">Không tìm thấy kết quả nào.</div>`;
+      } else {
+        dataToShow.forEach(item => {
+          // Tạo thẻ HTML cho từng sản phẩm
+          const badgeHTML = item.badge ? `<span class="m-badge ${item.badge}">${item.badge.toUpperCase()}</span>` : '';
+          const card = `
+            <div class="m-card">
+              <div class="m-card-img-box">
+                ${badgeHTML}
+                <img src="${item.img}" class="m-card-img" alt="${item.name}">
+              </div>
+              <div class="m-card-body">
+                <div class="m-cat">${getCatName(item.cat)}</div>
+                <h3 class="m-title">${item.name}</h3>
+                <div class="m-price">${item.price.toLocaleString('vi-VN')} ${item.unit}</div>
+                <div class="m-location"><i class='bx bx-map'></i> ${item.loc}</div>
+                <div class="m-footer">
+                  <div class="m-seller"><img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=100"> ${item.seller}</div>
+                  <button class="btn btn-primary" style="padding:6px 12px; font-size:0.8rem;">Mua</button>
+                </div>
+              </div>
+            </div>
+          `;
+          gridContainer.innerHTML += card;
+        });
+      }
+      resultCount.textContent = `Tìm thấy ${filteredData.length} kết quả`;
+
+      // C. Hiển thị nút Phân trang
+      renderPagination();
+    }
+
+    function renderPagination() {
+      const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+      paginationContainer.innerHTML = "";
+
+      if (totalPages <= 1) return; // Nếu chỉ có 1 trang thì không hiện nút
+
+      // Nút Previous
+      const prevBtn = document.createElement("button");
+      prevBtn.className = `page-btn ${currentPage === 1 ? 'disabled' : ''}`;
+      prevBtn.innerHTML = "<i class='bx bx-chevron-left'></i>";
+      prevBtn.onclick = () => changePage(currentPage - 1);
+      paginationContainer.appendChild(prevBtn);
+
+      // Các nút số (1, 2, 3...)
+      for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement("button");
+        btn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
+        btn.innerText = i;
+        btn.onclick = () => changePage(i);
+        paginationContainer.appendChild(btn);
+      }
+
+      // Nút Next
+      const nextBtn = document.createElement("button");
+      nextBtn.className = `page-btn ${currentPage === totalPages ? 'disabled' : ''}`;
+      nextBtn.innerHTML = "<i class='bx bx-chevron-right'></i>";
+      nextBtn.onclick = () => changePage(currentPage + 1);
+      paginationContainer.appendChild(nextBtn);
+    }
+
+    // 4. CÁC HÀM XỬ LÝ LOGIC
+    function changePage(pageNum) {
+      currentPage = pageNum;
+      // Cuộn lên đầu danh sách để xem trang mới dễ hơn
+      document.querySelector('.market-layout').scrollIntoView({ behavior: 'smooth' });
+      render();
+    }
+
+    function handleSearch() {
+      const term = searchInput.value.toLowerCase();
+      const region = regionSelect.value;
+      
+      // Lấy danh mục được chọn
+      const checkedCats = Array.from(categoryCheckboxes)
+                               .filter(cb => cb.checked)
+                               .map(cb => cb.value);
+
+      // Lọc dữ liệu gốc
+      filteredData = allProducts.filter(item => {
+        const matchName = item.name.toLowerCase().includes(term);
+        const matchRegion = region === 'all' || item.region === region;
+        const matchCat = checkedCats.includes(item.cat);
+        return matchName && matchRegion && matchCat;
+      });
+
+      // Reset về trang 1 khi tìm kiếm
+      currentPage = 1;
+      render();
+    }
+
+    function resetFilter() {
+      searchInput.value = "";
+      regionSelect.value = "all";
+      categoryCheckboxes.forEach(cb => cb.checked = true);
+      handleSearch();
+    }
+
+    // Helper: Đổi mã danh mục sang tên tiếng Việt
+    function getCatName(code) {
+      const map = {
+        'trai-cay': 'Trái cây', 'lua-gao': 'Lúa gạo', 'hai-san': 'Hải sản',
+        'rau-cu': 'Rau củ', 'cong-nghiep': 'Cây công nghiệp'
+      };
+      return map[code] || code;
+    }
+
+    // Lắng nghe sự kiện thay đổi checkbox
+    categoryCheckboxes.forEach(cb => cb.addEventListener('change', handleSearch));
+
+    // Khởi chạy lần đầu
+    render();
+
+  </script>
+  <script src="/dangkyhuan/auth-header.js"></script>
+</body>
+</html>

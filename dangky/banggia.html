@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Bảng Giá Thị Trường – NHH MARKET</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Font + Icon -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+  <style>
+  :root {
+    --primary: #22c55e;
+    --primary-dark: #15803d;
+    --primary-soft: #dcfce7;
+    --bg: #f4f7fb;
+    --text: #111827;
+    --muted: #6b7280;
+    --red: #ef4444;
+    --radius-md: 16px;
+    --shadow-card: 0 10px 25px rgba(15, 23, 42, 0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Poppins", sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  img { max-width: 100%; display: block; }
+  a { text-decoration: none; color: inherit; }
+  .container { width: min(1120px, 100% - 40px); margin-inline: auto; }
+/* màu user  */
+  .user-menu {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-name {
+  font-size: 0.9rem;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #15bca0; /* màu chữ tuỳ nền header */
+}
+
+.user-name i {
+  font-size: 1.1rem;
+}
+  /* HEADER */
+  header {
+    position: fixed;
+    inset-inline: 0;
+    top: 0;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  }
+  .nav {
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--primary-dark);
+  }
+  .logo img {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 26px;
+    font-weight: 500;
+  }
+  .nav-links a.active {
+    color: var(--primary);
+    font-weight: 600;
+    border-bottom: 2px solid var(--primary);
+  }
+  .nav-actions {
+    display: flex;
+    gap: 10px;
+  }
+  .btn {
+    border-radius: 999px;
+    padding: 9px 20px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.2s;
+  }
+  .btn-primary {
+    background: var(--primary);
+    color: white;
+  }
+  .btn-primary:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+  }
+  .btn-outline {
+    border: 1px solid #d1d5db;
+    background: white;
+  }
+
+  /* HERO */
+  .price-hero {
+    margin-top: 72px;
+    padding: 40px 0 30px;
+    background: #fff;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  .page-title {
+    font-size: 1.8rem;
+    color: var(--primary-dark);
+    margin-bottom: 5px;
+  }
+  .page-subtitle {
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  .highlight-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 30px;
+  }
+  .h-card {
+    background: #f9fafb;
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  .h-icon-box {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+  .h-icon-up { background: #dcfce7; color: var(--primary); }
+  .h-icon-down { background: #fee2e2; color: var(--red); }
+  .h-icon-star { background: #fef3c7; color: #d97706; }
+
+  .h-content h4 {
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .h-content strong {
+    display: block;
+    font-size: 1.1rem;
+    margin: 2px 0;
+  }
+  .h-badge {
+    font-size: 0.75rem;
+    padding: 2px 8px;
+    border-radius: 99px;
+    font-weight: 600;
+    display: inline-block;
+  }
+  .bg-up { background: #dcfce7; color: var(--primary-dark); }
+  .bg-down { background: #fee2e2; color: #991b1b; }
+
+  /* FILTER BAR */
+  .filter-bar {
+    margin: 30px 0 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    background: #fff;
+    padding: 20px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-card);
+    align-items: center;
+  }
+  .filter-input-group {
+    position: relative;
+    flex: 1;
+    min-width: 200px;
+  }
+  .filter-input-group i {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9ca3af;
+  }
+  .f-input, .f-select {
+    width: 100%;
+    padding: 10px 15px 10px 36px;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    outline: none;
+  }
+  .f-select {
+    padding-left: 12px;
+  }
+
+  /* TABLE */
+  .table-wrapper {
+    background: #fff;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    border: 1px solid #e5e7eb;
+  }
+  .price-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px;
+  }
+  .price-table th {
+    background: #f8fafc;
+    text-align: left;
+    padding: 16px;
+    font-size: 0.85rem;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid #e2e8f0;
+  }
+  .price-table td {
+    padding: 16px;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 0.95rem;
+    color: #334155;
+    vertical-align: middle;
+  }
+  .price-table tr:last-child td {
+    border-bottom: none;
+  }
+  .price-table tr:hover {
+    background: #f8fafc;
+  }
+  .p-name-cell {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 600;
+  }
+  .p-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+  .trend-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+  .trend-up { color: var(--primary); }
+  .trend-down { color: var(--red); }
+  .trend-flat { color: var(--muted); }
+
+  @media (max-width: 768px) {
+    .highlight-grid { grid-template-columns: 1fr; }
+    .nav-links, .nav-actions { display: none; }
+    .table-wrapper { overflow-x: auto; }
+  }
+  </style>
+</head>
+<body>
+
+  <header>
+  <nav class="container nav">
+    <a href="../index.html" class="logo">
+      <img src="https://images.pexels.com/photos/2886937/pexels-photo-2886937.jpeg?auto=compress&cs=tinysrgb&w=200"
+           alt="Logo NHH MARKET">
+      <span>NHH MARKET</span>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="../index.html">Trang chủ</a></li>
+      <li><a href="banggia.html">Bảng giá</a></li>
+      <li><a href="thitruong.html">Thị trường</a></li>
+      <li><a href="#">Hồ sơ</a></li>
+    </ul>
+
+    <div class="nav-actions" id="navActions">
+      <a class="btn btn-outline" href="dangnhap.html">Đăng nhập</a>
+      <a class="btn btn-primary" href="dangky.html">Đăng ký miễn phí</a>
+    </div>
+  </nav>
+</header>
+
+  <main>
+    <!-- HERO + HIGHLIGHTS -->
+    <section class="price-hero">
+      <div class="container">
+        <div
+          style="display: flex; justify-content: space-between; align-items: end; flex-wrap: wrap; gap: 10px;"
+        >
+          <div>
+            <h1 class="page-title">Bảng Giá Nông Sản Hôm Nay</h1>
+            <p class="page-subtitle" id="currentDate">Cập nhật lúc: ...</p>
+          </div>
+          <button class="btn btn-outline">
+            <i class="bx bx-download"></i> Xuất Excel
+          </button>
+        </div>
+
+        <div class="highlight-grid">
+          <div class="h-card">
+            <div class="h-icon-box h-icon-up">
+              <i class="bx bx-trending-up"></i>
+            </div>
+            <div class="h-content">
+              <h4>Tăng giá mạnh nhất</h4>
+              <strong>Hồ tiêu đen</strong>
+              <span class="h-badge bg-up">+2,500 đ/kg</span>
+            </div>
+          </div>
+          <div class="h-card">
+            <div class="h-icon-box h-icon-down">
+              <i class="bx bx-trending-down"></i>
+            </div>
+            <div class="h-content">
+              <h4>Giảm giá mạnh nhất</h4>
+              <strong>Thanh long đỏ</strong>
+              <span class="h-badge bg-down">-1,200 đ/kg</span>
+            </div>
+          </div>
+          <div class="h-card">
+            <div class="h-icon-box h-icon-star">
+              <i class="bx bxs-star"></i>
+            </div>
+            <div class="h-content">
+              <h4>Được quan tâm nhiều</h4>
+              <strong>Gạo ST25</strong>
+              <span class="h-badge" style="background:#fffbeb; color:#b45309">
+                Ổn định
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MAIN TABLE -->
+    <div class="container" style="padding-bottom: 80px;">
+      <!-- Filters -->
+      <div class="filter-bar">
+        <div class="filter-input-group">
+          <i class="bx bx-search"></i>
+          <input
+            type="text"
+            class="f-input"
+            id="searchInput"
+            placeholder="Tìm tên nông sản..."
+            onkeyup="filterTable()"
+          >
+        </div>
+        <div style="min-width: 180px;">
+          <select
+            class="f-select"
+            id="regionSelect"
+            onchange="filterTable()"
+          >
+            <option value="all">Tất cả khu vực</option>
+            <option value="mien-bac">Miền Bắc</option>
+            <option value="mien-trung">Miền Trung & TN</option>
+            <option value="mien-nam">Miền Nam</option>
+          </select>
+        </div>
+        <div style="min-width: 180px;">
+          <select
+            class="f-select"
+            id="catSelect"
+            onchange="filterTable()"
+          >
+            <option value="all">Tất cả loại</option>
+            <option value="trai-cay">Trái cây</option>
+            <option value="lua-gao">Lúa gạo</option>
+            <option value="rau-cu">Rau củ</option>
+            <option value="cong-nghiep">Cây công nghiệp</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div class="table-wrapper">
+        <table class="price-table">
+          <thead>
+            <tr>
+              <th>Tên Nông Sản</th>
+              <th>Khu vực / Chợ</th>
+              <th>Đơn vị</th>
+              <th>Giá hôm nay</th>
+              <th>Giá hôm qua</th>
+              <th>Xu hướng</th>
+            </tr>
+          </thead>
+          <tbody id="priceTableBody"></tbody>
+        </table>
+      </div>
+
+      <p
+        style="margin-top: 15px; font-size: 0.85rem; color: #6b7280; text-align: center;"
+      >
+        * Giá mang tính tham khảo, thu thập từ các chợ đầu mối lớn.
+      </p>
+    </div>
+  </main>
+
+  <script>
+    // Hiển thị ngày giờ hiện tại
+    const dateEl = document.getElementById("currentDate");
+    const now = new Date();
+    dateEl.textContent =
+      "Cập nhật: " +
+      now.toLocaleDateString("vi-VN") +
+      " - " +
+      now.toLocaleTimeString("vi-VN", {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+
+    // Dữ liệu giá + imageQuery để lấy ảnh đúng loại trên Unsplash
+    const priceData = [
+      {
+        name: "Hồ tiêu đen (Tiêu xô)",
+        unit: "kg",
+        priceToday: 75000,
+        priceYesterday: 72500,
+        region: "mien-trung",
+        market: "Gia Lai",
+        cat: "cong-nghiep",
+        imageQuery: "black peppercorns"
+      },
+      {
+        name: "Thanh long ruột đỏ",
+        unit: "kg",
+        priceToday: 22000,
+        priceYesterday: 23200,
+        region: "mien-nam",
+        market: "Bình Thuận",
+        cat: "trai-cay",
+        imageQuery: "red dragon fruit"
+      },
+      {
+        name: "Gạo ST25 (Lúa tươi)",
+        unit: "kg",
+        priceToday: 8200,
+        priceYesterday: 8200,
+        region: "mien-nam",
+        market: "Sóc Trăng",
+        cat: "lua-gao",
+        imageQuery: "rice grains close up"
+      },
+      {
+        name: "Cà phê Robusta",
+        unit: "kg",
+        priceToday: 62500,
+        priceYesterday: 61000,
+        region: "mien-trung",
+        market: "Đắk Lắk",
+        cat: "cong-nghiep",
+        imageQuery: "coffee beans robusta"
+      },
+      {
+        name: "Vải thiều sớm",
+        unit: "kg",
+        priceToday: 35000,
+        priceYesterday: 38000,
+        region: "mien-bac",
+        market: "Bắc Giang",
+        cat: "trai-cay",
+        imageQuery: "lychee fruits"
+      },
+      {
+        name: "Khoai lang tím Nhật",
+        unit: "kg",
+        priceToday: 12000,
+        priceYesterday: 11500,
+        region: "mien-nam",
+        market: "Vĩnh Long",
+        cat: "rau-cu",
+        imageQuery: "purple sweet potatoes"
+      },
+      {
+        name: "Xoài cát Hòa Lộc",
+        unit: "kg",
+        priceToday: 45000,
+        priceYesterday: 45000,
+        region: "mien-nam",
+        market: "Tiền Giang",
+        cat: "trai-cay",
+        imageQuery: "mango fruit ripe"
+      },
+      {
+        name: "Chè búp tươi",
+        unit: "kg",
+        priceToday: 28000,
+        priceYesterday: 28000,
+        region: "mien-bac",
+        market: "Thái Nguyên",
+        cat: "cong-nghiep",
+        imageQuery: "fresh tea leaves,green tea"
+      },
+      {
+        name: "Dưa hấu Hắc Mỹ Nhân",
+        unit: "kg",
+        priceToday: 8500,
+        priceYesterday: 8000,
+        region: "mien-trung",
+        market: "Phú Yên",
+        cat: "trai-cay",
+        imageQuery: "watermelon"
+      },
+      {
+        name: "Măng cụt",
+        unit: "kg",
+        priceToday: 60000,
+        priceYesterday: 58000,
+        region: "mien-nam",
+        market: "Lái Thiêu",
+        cat: "trai-cay",
+        imageQuery: "mangosteen fruit"
+      },
+    ];
+
+    const tableBody = document.getElementById("priceTableBody");
+
+    function getRegionName(code) {
+      if (code === "mien-bac") return "Miền Bắc";
+      if (code === "mien-trung") return "Miền Trung";
+      return "Miền Nam";
+    }
+
+    function renderTable(data) {
+      tableBody.innerHTML = "";
+
+      if (data.length === 0) {
+        tableBody.innerHTML =
+          `<tr><td colspan="6" style="text-align:center; padding:30px;">Không tìm thấy kết quả phù hợp</td></tr>`;
+        return;
+      }
+
+      data.forEach((item) => {
+        const diff = item.priceToday - item.priceYesterday;
+        let trendHTML = `<span class="trend-tag trend-flat"><i class='bx bx-minus'></i> Ổn định</span>`;
+        if (diff > 0) {
+          trendHTML = `<span class="trend-tag trend-up"><i class='bx bx-up-arrow-alt'></i> +${diff.toLocaleString()} đ</span>`;
+        } else if (diff < 0) {
+          trendHTML = `<span class="trend-tag trend-down"><i class='bx bx-down-arrow-alt'></i> ${diff.toLocaleString()} đ</span>`;
+        }
+
+        // Ảnh đúng loại nông sản từ Unsplash
+        const query = encodeURIComponent(item.imageQuery || item.name);
+        const imgUrl = `https://source.unsplash.com/80x80/?${query}`;
+
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>
+            <div class="p-name-cell">
+              <img src="${imgUrl}" class="p-img" alt="${item.name}">
+              ${item.name}
+            </div>
+          </td>
+          <td>
+            <div style="display:flex; flex-direction:column; font-size:0.85rem;">
+              <span style="font-weight:600;">${item.market}</span>
+              <span style="color:#94a3b8;">${getRegionName(item.region)}</span>
+            </div>
+          </td>
+          <td>${item.unit}</td>
+          <td style="font-weight:600; color:#111827;">${item.priceToday.toLocaleString()} đ</td>
+          <td style="color:#64748b;">${item.priceYesterday.toLocaleString()} đ</td>
+          <td>${trendHTML}</td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+
+    function filterTable() {
+      const text = document.getElementById("searchInput").value.toLowerCase();
+      const region = document.getElementById("regionSelect").value;
+      const cat = document.getElementById("catSelect").value;
+
+      const filtered = priceData.filter((item) => {
+        const matchText = item.name.toLowerCase().includes(text);
+        const matchRegion = region === "all" || item.region === region;
+        const matchCat = cat === "all" || item.cat === cat;
+        return matchText && matchRegion && matchCat;
+      });
+
+      renderTable(filtered);
+    }
+
+    renderTable(priceData);
+  </script>
+  <script src="/dangkyhuan/auth-header.js"></script>
+</body>
+</html>

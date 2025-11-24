@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>NHH MARKET - Đăng ký tài khoản</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Font + Icon -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
+    <style>
+        :root{
+            --green:#2e7d32;
+            --green-dark:#1b5e20;
+            --green-soft:#c8e6c9;
+            --yellow:#f9a825;
+            --white:#ffffff;
+            --shadow:0 20px 40px rgba(0,0,0,0.35);
+            --radius:22px;
+        }
+
+        *{box-sizing:border-box;margin:0;padding:0;}
+        body{
+            font-family:'Nunito',sans-serif;
+            min-height:100vh;
+            color:#123;
+            background:#e8f5e9;
+            overflow:hidden;
+        }
+
+        /* Background thiên nhiên */
+        body::before{
+            content:"";
+            position:fixed;
+            inset:0;
+            background:url("https://images.unsplash.com/photo-1487730116645-74489c95b41b?auto=format&fit=crop&w=1600&q=80")
+                        center/cover no-repeat;
+            opacity:.5;
+            filter:blur(1.3px);
+            z-index:-2;
+        }
+        body::after{
+            content:"";
+            position:fixed;
+            inset:0;
+            background:radial-gradient(circle at top left,rgba(255,255,255,.7),transparent 55%),
+                       radial-gradient(circle at bottom right,rgba(56,142,60,.65),rgba(0,0,0,.7));
+            mix-blend-mode:soft-light;
+            z-index:-1;
+        }
+
+        a{text-decoration:none;color:inherit;}
+
+        .top-bar{
+            position:fixed;
+            top:0;left:0;right:0;
+            padding:8px 22px;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            z-index:10;
+            color:#f1f8e9;
+            pointer-events:none;
+        }
+        .brand{
+            display:flex;align-items:center;gap:8px;
+            font-weight:800;font-size:1.22rem;
+            text-shadow:0 3px 10px rgba(0,0,0,.55);
+        }
+        .brand-icon{
+            width:34px;height:34px;border-radius:50%;
+            background:radial-gradient(circle at 30% 30%,#fff,var(--green));
+            display:flex;align-items:center;justify-content:center;
+            color:#fff;box-shadow:0 4px 12px rgba(0,0,0,.4);
+        }
+        .top-link{
+            pointer-events:auto;
+            font-size:.9rem;
+            padding:6px 14px;
+            border-radius:999px;
+            border:1px solid rgba(255,255,255,.7);
+            background:rgba(0,0,0,.25);
+            backdrop-filter:blur(10px);
+        }
+
+        .auth-wrapper{
+            height:100vh;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            padding:80px 16px 24px;
+        }
+
+        .auth-card{
+            width:100%;
+            max-width:980px;
+            display:grid;
+            grid-template-columns:1.1fr 1fr;
+            background:rgba(255,255,255,.08);
+            border-radius:var(--radius);
+            padding:2px;
+            box-shadow:var(--shadow);
+            backdrop-filter:blur(14px);
+            border:1px solid rgba(255,255,255,.2);
+            animation:slideUp .8s ease-out forwards;
+            overflow:hidden;
+            position:relative;
+        }
+        .auth-card::before{
+            content:"";
+            position:absolute;
+            inset:0;
+            background:linear-gradient(135deg,rgba(255,255,255,.35),rgba(200,230,201,.05));
+            pointer-events:none;
+        }
+
+        .auth-side{
+            position:relative;
+            padding:24px 26px;
+            z-index:1;
+        }
+
+        /* Cột trái: giới thiệu */
+        .auth-visual{
+            border-radius:var(--radius);
+            background:radial-gradient(circle at 0 0,rgba(255,255,255,.35),transparent 55%),
+                       linear-gradient(135deg,rgba(27,94,32,.9),rgba(56,142,60,.7));
+            color:#f1f8e9;
+            display:flex;
+            flex-direction:column;
+            justify-content:space-between;
+        }
+        .visual-top h1{
+            font-size:2rem;
+            line-height:1.25;
+            margin-bottom:10px;
+        }
+        .visual-top h1 span{color:var(--yellow);}
+        .visual-top p{
+            font-size:.96rem;
+            opacity:.95;
+            margin-bottom:16px;
+        }
+        .visual-badges{
+            display:flex;flex-wrap:wrap;gap:10px;
+            font-size:.8rem;
+        }
+        .v-badge{
+            padding:5px 10px;
+            border-radius:999px;
+            background:rgba(255,255,255,.15);
+            border:1px solid rgba(255,255,255,.35);
+        }
+        .visual-bottom{
+            font-size:.8rem;
+            opacity:.9;
+            display:flex;
+            justify-content:space-between;
+            align-items:flex-end;
+            gap:8px;
+        }
+        .visual-bottom strong{font-size:1.1rem;}
+
+        /* Cột phải: form đăng ký */
+        .auth-form{
+            background:rgba(255,255,255,.97);
+            border-radius:var(--radius);
+            box-shadow:0 12px 30px rgba(0,0,0,.15);
+        }
+        .auth-form h2{
+            font-size:1.45rem;
+            color:var(--green-dark);
+            margin-bottom:4px;
+        }
+        .auth-form p{
+            font-size:.9rem;
+            color:#555;
+            margin-bottom:16px;
+        }
+
+        label{
+            display:block;
+            font-size:.82rem;
+            font-weight:600;
+            margin-bottom:4px;
+            color:#234;
+        }
+        .field{
+            margin-bottom:10px;
+        }
+        .two-col{
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:10px;
+        }
+        .input-wrap{
+            position:relative;
+        }
+        input,select{
+            width:100%;
+            border-radius:999px;
+            border:1px solid rgba(0,0,0,.15);
+            padding:9px 40px 9px 12px;
+            font-size:.9rem;
+            outline:none;
+            transition:border .2s, box-shadow .2s, background .2s;
+            background:#fdfefc;
+        }
+        select{
+            padding-right:12px;
+        }
+        input:focus,select:focus{
+            border-color:var(--green);
+            box-shadow:0 0 0 2px rgba(76,175,80,.25);
+        }
+        .input-icon{
+            position:absolute;
+            right:12px;top:50%;
+            transform:translateY(-50%);
+            color:#777;
+            cursor:pointer;
+        }
+
+        .terms{
+            display:flex;
+            align-items:flex-start;
+            gap:8px;
+            font-size:.8rem;
+            margin:4px 0 10px;
+        }
+        .terms input{
+            width:auto;padding:0;box-shadow:none;
+        }
+        .terms a{color:var(--green-dark);}
+
+        .btn{
+            border:none;cursor:pointer;
+            font-weight:700;font-size:.94rem;
+            padding:9px 18px;
+            border-radius:999px;
+            width:100%;
+            display:inline-flex;align-items:center;justify-content:center;gap:8px;
+            transition:transform .15s,box-shadow .15s,background .2s;
+        }
+        .btn-primary{
+            background:linear-gradient(135deg,var(--green),var(--green-dark));
+            color:#fff;
+            box-shadow:0 12px 22px rgba(0,0,0,.24);
+        }
+        .btn-primary:hover{
+            transform:translateY(-1px) scale(1.02);
+            box-shadow:0 16px 30px rgba(0,0,0,.3);
+        }
+
+        .hint{
+            font-size:.8rem;
+            margin-top:10px;
+            text-align:center;
+            color:#555;
+        }
+        .hint a{
+            color:var(--green-dark);
+            font-weight:700;
+        }
+
+        .msg{
+            font-size:.8rem;
+            margin-top:8px;
+            text-align:center;
+        }
+
+        @keyframes slideUp{
+            0%{opacity:0;transform:translateY(28px) scale(.97);}
+            100%{opacity:1;transform:translateY(0) scale(1);}
+        }
+
+        /* RESPONSIVE */
+        @media (max-width:860px){
+            .auth-card{
+                max-width:520px;
+                grid-template-columns:1fr;
+            }
+            .auth-visual{display:none;}
+        }
+        @media (max-width:520px){
+            .auth-form{padding:20px 18px;}
+            .top-bar{justify-content:center;}
+            .top-link{display:none;}
+        }
+    </style>
+</head>
+<body>
+
+<header class="top-bar">
+    <div class="brand">
+        <div class="brand-icon"><i class="fa-solid fa-leaf"></i></div>
+        NHH MARKET
+    </div>
+    <a href="dangnhap.html" class="top-link">
+        <i class="fa-solid fa-arrow-left"></i> Đã có tài khoản? Đăng nhập
+    </a>
+</header>
+
+<div class="auth-wrapper">
+    <div class="auth-card">
+        <!-- Cột trái -->
+        <div class="auth-side auth-visual">
+            <div class="visual-top">
+                <h1>Tạo tài khoản<br><span>NHH MARKET</span> miễn phí</h1>
+                <p>
+                    Giúp nông dân và người mua nông sản gặp nhau dễ dàng hơn:
+                    đăng sản phẩm, theo dõi giá, chốt đơn nhanh chóng.
+                </p>
+            </div>
+            <div class="visual-badges">
+                <div class="v-badge"><i class="fa-solid fa-tractor"></i> Dành cho nông dân</div>
+                <div class="v-badge"><i class="fa-solid fa-store"></i> Dành cho thương lái / DN</div>
+                <div class="v-badge"><i class="fa-solid fa-bell"></i> Cảnh báo giá tự động</div>
+            </div>
+            <div class="visual-bottom">
+                <div>
+                    <strong>5 phút</strong><br>Hoàn tất đăng ký
+                </div>
+                <div>
+                    <strong>Miễn phí</strong><br>Không thu phí tạo tài khoản
+                </div>
+                <div>
+                    <strong>Bảo mật</strong><br>Thông tin được mã hoá
+                </div>
+            </div>
+        </div>
+
+        <!-- Cột phải: Form đăng ký -->
+        <div class="auth-side auth-form">
+            <h2>Đăng ký tài khoản</h2>
+            <p>Điền thông tin cơ bản để bắt đầu sử dụng NHH MARKET.</p>
+
+            <form id="registerForm">
+                <div class="field">
+                    <label for="fullName">Họ và tên *</label>
+                    <div class="input-wrap">
+                        <input id="fullName" required placeholder="Ví dụ: Nguyễn Văn A">
+                        <span class="input-icon"><i class="fa-regular fa-user"></i></span>
+                    </div>
+                </div>
+
+                <div class="field two-col">
+                    <div>
+                        <label for="phone">Số điện thoại *</label>
+                        <div class="input-wrap">
+                            <input id="phone" type="tel" required placeholder="09xx xxx xxx">
+                            <span class="input-icon"><i class="fa-solid fa-phone"></i></span>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="email">Email (nếu có)</label>
+                        <div class="input-wrap">
+                            <input id="email" type="email" placeholder="ten@nhh.com">
+                            <span class="input-icon"><i class="fa-regular fa-envelope"></i></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field two-col">
+                    <div>
+                        <label for="accountType">Loại tài khoản *</label>
+                        <select id="accountType" required>
+                            <option value="">-- Chọn --</option>
+                            <option value="farmer">Nông dân / Hộ trồng trọt</option>
+                            <option value="buyer">Người mua / Thương lái</option>
+                            <option value="company">Doanh nghiệp thu mua / xuất khẩu</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="region">Khu vực *</label>
+                        <select id="region" required>
+                            <option value="">-- Chọn khu vực --</option>
+                            <option>Miền Bắc</option>
+                            <option>Miền Trung</option>
+                            <option>Miền Nam</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="password">Mật khẩu *</label>
+                    <div class="input-wrap">
+                        <input id="password" type="password" required minlength="6"
+                               placeholder="Ít nhất 6 ký tự">
+                        <span class="input-icon" id="togglePwd1">
+                            <i class="fa-regular fa-eye"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="confirmPassword">Nhập lại mật khẩu *</label>
+                    <div class="input-wrap">
+                        <input id="confirmPassword" type="password" required minlength="6"
+                               placeholder="Nhập lại giống mật khẩu ở trên">
+                        <span class="input-icon" id="togglePwd2">
+                            <i class="fa-regular fa-eye"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <label class="terms">
+                    <input id="terms" type="checkbox" required>
+                    <span>
+                        Tôi đồng ý với <a href="#">Điều khoản sử dụng</a> và <a href="#">Chính sách bảo mật</a>
+                        của NHH MARKET.
+                    </span>
+                </label>
+
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa-solid fa-user-plus"></i> Tạo tài khoản
+                </button>
+
+                <p class="hint">
+                    Đã có tài khoản? <a href="dangnhap.html">Đăng nhập ngay</a>
+                </p>
+
+                <p class="msg" id="regMsg"></p>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Ẩn/hiện mật khẩu
+const form = document.getElementById("registerForm");
+const msg  = document.getElementById("regMsg");
+
+form.addEventListener("submit", (e)=>{
+    e.preventDefault();
+
+    const fullName = document.getElementById("fullName").value.trim();
+    const phone    = document.getElementById("phone").value.trim();
+    const email    = document.getElementById("email").value.trim();
+    const pass     = document.getElementById("password").value;
+    const cpass    = document.getElementById("confirmPassword").value;
+
+    if (phone.length < 9){
+        msg.style.color = "#c0392b";
+        msg.textContent = "Số điện thoại không hợp lệ.";
+        return;
+    }
+    if (pass.length < 6){
+        msg.style.color = "#c0392b";
+        msg.textContent = "Mật khẩu quá ngắn.";
+        return;
+    }
+    if (pass !== cpass){
+        msg.style.color = "#c0392b";
+        msg.textContent = "Mật khẩu không trùng khớp.";
+        return;
+    }
+
+    // lấy user
+    let users = JSON.parse(localStorage.getItem("users") || "[]");
+    if (!Array.isArray(users)) {
+        users = []; // reset nếu bị lỗi
+    }
+
+    // Kiểm tra trùng số
+    if (users.some(u => u.phone === phone)) {
+        msg.style.color = "#c0392b";
+        msg.textContent = "Số điện thoại đã đăng ký.";
+        return;
+    }
+
+    // lưu user
+    users.push({ fullName, phone, email, password: pass });
+    localStorage.setItem("users", JSON.stringify(users));
+
+    msg.style.color = "#1b5e20";
+    msg.textContent = "Đăng ký thành công! Đang chuyển sang trang đăng nhập...";
+
+    // chuyển trang đăng nhập
+    setTimeout(() => {
+        window.location.href = "dangnhap.html";
+    }, 1500);
+});
+
+</script>
+
+
+</body>
+</html>
